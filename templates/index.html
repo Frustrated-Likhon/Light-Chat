@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light Chat</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.socket.io/4.5.0/socket.io.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Login Screen -->
+        <div id="login-screen">
+            <div class="login-box">
+                <h2>Choose Your ID</h2>
+                <input type="text" id="user-id-input" placeholder="Enter your unique ID">
+                <button onclick="registerUser()">Join Chat</button>
+            </div>
+        </div>
+
+        <!-- Main Chat Interface (hidden initially) -->
+        <div id="chat-app" class="hidden">
+
+            <!-- Mobile Navigation -->
+            <div class="mobile-nav">
+                <button id="show-chats">💬 Chats</button>
+                <button id="show-chat">📱 Chat</button>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+
+                <div class="user-actions">
+                    <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+                    <button class="clear-history-btn" onclick="clearChatHistory()">🗑️ Clear History</button>
+                </div>
+
+
+                <div class="user-header">
+                    <h3>👋 <span id="current-user-display">User</span></h3>
+                    <span class="online-indicator"></span>
+                </div>
+
+                <div class="section">
+                    <h4>Direct Messages</h4>
+                    <div id="user-list"></div>
+                    <input type="text" id="private-chat-input" placeholder="Enter user ID">
+                    <button onclick="startPrivateChat()">Message User</button>
+                </div>
+
+                <div class="section">
+                    <h4>Group Chats</h4>
+                    <div id="room-list"></div>
+                    <input type="text" id="new-room-input" placeholder="New group name">
+                    <button onclick="createRoom()">Create Group</button>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <div class="chat-header">
+                    <h3 id="active-chat-name">General</h3>
+                </div>
+                <div id="message-container"></div>
+                <div class="message-input-area">
+                    <input type="text" id="message-input" placeholder="Type a message...">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
