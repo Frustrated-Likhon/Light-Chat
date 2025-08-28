@@ -37,7 +37,7 @@ LightChat/
 
 1. Clone this repository:  
 ```bash
-git clone https://github.com/yourusername/LightChat.git
+git clone https://github.com/Frustrated-Likhon/Light-Chat
 cd LightChat
 ```
 
