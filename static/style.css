@@ -15,7 +15,7 @@ body {
     display: none !important;
 }
 
-/* Login Screen */
+
 #login-screen {
     display: flex;
     justify-content: center;
@@ -65,7 +65,7 @@ body {
     background: #5a6fd5;
 }
 
-/* Main Chat App */
+
 #chat-app {
     display: flex;
     height: 100vh;
@@ -78,7 +78,7 @@ body {
     }
 }
 
-/* Sidebar */
+
 .sidebar {
     width: 100%;
     background: #2f3136;
@@ -178,7 +178,7 @@ body {
     font-weight: bold;
 }
 
-/* Chat Area */
+
 .chat-area {
     flex: 1;
     display: flex;
@@ -276,7 +276,7 @@ body {
     font-size: 14px;
 }
 
-/* Mobile Navigation */
+
 .mobile-nav {
     display: flex;
     background: #2f3136;
@@ -298,7 +298,7 @@ body {
     }
 }
 
-/* Logout Button */
+
 .logout-btn {
     width: 100%;
     padding: 8px;
@@ -331,7 +331,7 @@ body {
     background: #e6b800 !important;
 }
 
-/* User header actions */
+
 .user-actions {
     display: flex;
     flex-direction: column;
