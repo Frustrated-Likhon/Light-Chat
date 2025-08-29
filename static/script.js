@@ -4,12 +4,12 @@ let activeChat = { type: null, id: null, name: null };
 let onlineUsers = [];
 let chatHistory = {};
 
-// Check if user was previously logged in
+
 window.addEventListener('DOMContentLoaded', function() {
     const savedUser = localStorage.getItem('chat_user_id');
     if (savedUser) {
         document.getElementById('user-id-input').value = savedUser;
-        // Auto-login after a short delay
+        
         setTimeout(() => registerUser(), 500);
     }
 });
@@ -18,7 +18,7 @@ function registerUser() {
     const userId = document.getElementById('user-id-input').value.trim();
     if (!userId) return alert('Please enter a user ID');
     
-    // Save user ID to local storage
+    
     localStorage.setItem('chat_user_id', userId);
     
     socket = io();
@@ -34,7 +34,7 @@ function registerUser() {
         document.getElementById('current-user').textContent = userId;
         document.getElementById('current-user-display').textContent = userId;
         
-        // Load saved chat history
+        
         loadChatHistory();
     });
 
@@ -49,7 +49,7 @@ function registerUser() {
     });
 
     socket.on('new_private_message', (data) => {
-        // Store message in history
+      
         if (!chatHistory[data.from]) chatHistory[data.from] = [];
         chatHistory[data.from].push({
             sender: data.from,
@@ -58,14 +58,14 @@ function registerUser() {
             type: 'received'
         });
 
-        // Save to local storage
+ 
         saveChatHistory();
 
-        // If this chat is active, display it
+      
         if (activeChat.type === 'private' && activeChat.id === data.from) {
             displayMessage(data.from, data.message, false);
         } else {
-            // Show notification badge
+            
             updateChatBadge(data.from);
         }
     });
@@ -95,13 +95,13 @@ function saveChatHistory() {
 }
 
 function loadChatHistory() {
-    // Load chat history
+    
     const savedHistory = localStorage.getItem('chat_history');
     if (savedHistory) {
         chatHistory = JSON.parse(savedHistory);
     }
 
-    // Load rooms
+ 
     const savedRooms = localStorage.getItem('chat_rooms');
     if (savedRooms) {
         const rooms = JSON.parse(savedRooms);
@@ -181,9 +181,9 @@ function startPrivateChat(userId) {
     document.getElementById('active-chat-name').textContent = userId;
     document.getElementById('message-container').innerHTML = '';
     
-    // Load chat history if any
+   
     if (chatHistory[userId]) {
-        // Sort messages by timestamp
+        
         chatHistory[userId].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
         
         chatHistory[userId].forEach(msg => {
@@ -191,7 +191,7 @@ function startPrivateChat(userId) {
         });
     }
     
-    // Remove badge
+    
     removeChatBadge(userId);
     updateActiveChatHighlight();
     hideSidebarOnMobile();
@@ -233,7 +233,7 @@ function createRoom() {
     
     socket.emit('join_group', { user_id: currentUser, room_name: roomName });
     
-    // Add to room list
+
     const roomList = document.getElementById('room-list');
     const roomItem = document.createElement('div');
     roomItem.className = 'room-item';
@@ -243,7 +243,7 @@ function createRoom() {
         document.getElementById('message-container').innerHTML = '';
         
         if (chatHistory[roomName]) {
-            // Sort messages by timestamp
+           
             chatHistory[roomName].sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
             
             chatHistory[roomName].forEach(msg => {
@@ -260,7 +260,7 @@ function createRoom() {
     
     document.getElementById('new-room-input').value = '';
     
-    // Save rooms to local storage
+   
     saveChatHistory();
 }
 
@@ -278,7 +278,7 @@ function sendMessage() {
             from: currentUser
         });
         
-        // Store in history
+        
         if (!chatHistory[activeChat.id]) chatHistory[activeChat.id] = [];
         chatHistory[activeChat.id].push({
             sender: currentUser,
@@ -306,7 +306,7 @@ function sendMessage() {
         displayMessage(currentUser, message, true);
     }
 
-    // Save to local storage
+    
     saveChatHistory();
     messageInput.value = '';
 }
@@ -351,8 +351,9 @@ function clearChatHistory() {
     }
 }
 
-// Mobile navigation
+
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('show-chats').addEventListener('click', showSidebarOnMobile);
     document.getElementById('show-chat').addEventListener('click', hideSidebarOnMobile);
+
 });
