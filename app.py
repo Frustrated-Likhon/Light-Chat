@@ -7,10 +7,10 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key_change_this_in_production'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-# Storage
-users = {}  # {user_id: socket_id}
+
+users = {}  
 online_users = set()
-rooms = defaultdict(list)  # {room_name: [user_ids]}
+rooms = defaultdict(list) 
 
 @app.route('/')
 def index():
@@ -21,7 +21,7 @@ def handle_register(user_id):
     users[user_id] = request.sid
     online_users.add(user_id)
     emit('registration_success', {'user_id': user_id})
-    # Send current online users to everyone
+    
     emit('user_joined', {'users': list(online_users)}, broadcast=True)
 
 @socketio.on('disconnect')
@@ -35,7 +35,7 @@ def handle_disconnect():
     if user_id:
         users.pop(user_id, None)
         online_users.discard(user_id)
-        # Remove user from all rooms
+       
         for room_name in list(rooms.keys()):
             if user_id in rooms[room_name]:
                 rooms[room_name].remove(user_id)
@@ -82,5 +82,5 @@ def handle_group_message(data):
     }, room=room_name)
 
 if __name__ == '__main__':
-    # Add allow_unsafe_werkzeug=True to fix the error
+
     socketio.run(app, host='0.0.0.0', port=3009, debug=True, allow_unsafe_werkzeug=True)
